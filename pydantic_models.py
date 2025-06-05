@@ -20,13 +20,6 @@ class DocumentInfo(BaseModel):
     id: int
     filename: str
     upload_timestamp: datetime
-    file_size: int
-    content_type: str
-
-    class Config:
-        json_encoders = {
-            datetime: lambda v: v.isoformat()
-        }
 
 class DeleteFileRequest(BaseModel):
     file_id: int

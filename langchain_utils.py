@@ -7,11 +7,14 @@ from typing import List
 from langchain_core.documents import Document
 import os
 from chroma_utils import vectorstore
-
 retriever = vectorstore.as_retriever(search_kwargs={"k": 2})
 
 output_parser = StrOutputParser()
 
+
+
+
+# Set up prompts and chains
 contextualize_q_system_prompt = (
     "Given a chat history and the latest user question "
     "which might reference context in the chat history, "
@@ -26,12 +29,16 @@ contextualize_q_prompt = ChatPromptTemplate.from_messages([
     ("human", "{input}"),
 ])
 
+
+
 qa_prompt = ChatPromptTemplate.from_messages([
     ("system", "You are a helpful AI assistant. Use the following context to answer the user's question."),
     ("system", "Context: {context}"),
     MessagesPlaceholder(variable_name="chat_history"),
     ("human", "{input}")
 ])
+
+
 
 def get_rag_chain(model="gpt-4o-mini"):
     llm = ChatOpenAI(model=model)

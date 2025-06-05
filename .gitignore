@@ -1,0 +1,16 @@
+# Byte-compiled / optimized files
+__pycache__/
+*.pyc
+
+# Virtual environment
+.venv/
+
+# Database and Chroma
+rag_app.db
+chroma_db/
+
+# Log files
+app.log
+
+# MacOS system files
+.DS_Store

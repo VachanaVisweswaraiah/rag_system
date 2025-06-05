@@ -19,14 +19,6 @@ def create_application_logs():
                      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)''')
     conn.close()
 
-def create_document_store():
-    conn = get_db_connection()
-    conn.execute('''CREATE TABLE IF NOT EXISTS document_store
-                    (id INTEGER PRIMARY KEY AUTOINCREMENT,
-                     filename TEXT,
-                     upload_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP)''')
-    conn.close()
-
 def insert_application_logs(session_id, user_query, gpt_response, model):
     conn = get_db_connection()
     conn.execute('INSERT INTO application_logs (session_id, user_query, gpt_response, model) VALUES (?, ?, ?, ?)',
@@ -46,6 +38,15 @@ def get_chat_history(session_id):
         ])
     conn.close()
     return messages
+
+def create_document_store():
+    conn = get_db_connection()
+    conn.execute('''CREATE TABLE IF NOT EXISTS document_store
+                    (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                     filename TEXT,
+                     upload_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP)''')
+    conn.close()
+
 def insert_document_record(filename):
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -69,6 +70,7 @@ def get_all_documents():
     documents = cursor.fetchall()
     conn.close()
     return [dict(doc) for doc in documents]
+
 # Initialize the database tables
 create_application_logs()
 create_document_store()
