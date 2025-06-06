@@ -5,8 +5,7 @@ import streamlit as st
 from app.sidebar import display_sidebar
 from app.chat_interface import display_chat_interface
 
-st.title("Langchain RAG Chatbot")
-st.write("App is starting...") 
+st.title("Langchain RAG Chatbot") 
 # Initialize session state variables
 if "messages" not in st.session_state:
     st.session_state.messages = []

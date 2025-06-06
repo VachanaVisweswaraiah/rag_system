@@ -1,6 +1,9 @@
 import requests
 import streamlit as st
 
+
+BASE_URL = "https://rag-system-api.onrender.com"
+
 def get_api_response(question, session_id, model):
     headers = {
         'accept': 'application/json',
@@ -14,7 +17,8 @@ def get_api_response(question, session_id, model):
         data["session_id"] = session_id
 
     try:
-        response = requests.post("http://localhost:8000/chat", headers=headers, json=data)
+    
+        response = requests.post(f"{BASE_URL}/chat", headers=headers, json=data)
         if response.status_code == 200:
             return response.json()
         else:
@@ -28,7 +32,8 @@ def upload_document(file):
     print("Uploading file...")
     try:
         files = {"file": (file.name, file, file.type)}
-        response = requests.post("http://localhost:8000/upload-doc", files=files)
+        
+        response = requests.post(f"{BASE_URL}/upload-doc", files=files)
         if response.status_code == 200:
             return response.json()
         else:
@@ -40,7 +45,8 @@ def upload_document(file):
 
 def list_documents():
     try:
-        response = requests.get("http://localhost:8000/list-docs")
+        
+        response = requests.get(f"{BASE_URL}/list-docs")
         if response.status_code == 200:
             return response.json()
         else:
@@ -58,7 +64,8 @@ def delete_document(file_id):
     data = {"file_id": file_id}
 
     try:
-        response = requests.post("http://localhost:8000/delete-doc", headers=headers, json=data)
+        
+        response = requests.post(f"{BASE_URL}/delete-doc", headers=headers, json=data)
         if response.status_code == 200:
             return response.json()
         else:
